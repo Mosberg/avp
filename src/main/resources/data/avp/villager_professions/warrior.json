@@ -1,0 +1,8 @@
+{
+  "profession": "avp:warrior",
+  "workstation": "avp:warrior_poi",
+  "sound": "avp:warrior_work",
+  "clothing": {
+    "default": "avp:textures/entity/villager/profession/warrior.png"
+  }
+}

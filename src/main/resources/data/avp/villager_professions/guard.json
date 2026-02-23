@@ -1,0 +1,8 @@
+{
+  "profession": "avp:guard",
+  "workstation": "avp:guard_poi",
+  "sound": "avp:guard_alarm",
+  "clothing": {
+    "default": "avp:textures/entity/villager/profession/guard.png"
+  }
+}

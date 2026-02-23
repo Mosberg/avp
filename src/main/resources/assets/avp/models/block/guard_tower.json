@@ -1,0 +1,20 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "texture": "avp:block/guard_tower"
+  },
+  "elements": [
+    {
+      "from": [2, 0, 2],
+      "to": [14, 32, 14],
+      "faces": {
+        "north": { "texture": "#texture" },
+        "south": { "texture": "#texture" },
+        "east": { "texture": "#texture" },
+        "west": { "texture": "#texture" },
+        "up": { "texture": "#texture" },
+        "down": { "texture": "#texture" }
+      }
+    }
+  ]
+}

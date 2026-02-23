@@ -1,0 +1,20 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "texture": "avp:block/guard_post"
+  },
+  "elements": [
+    {
+      "from": [1, 4, 0],
+      "to": [15, 12, 2],
+      "faces": {
+        "north": { "texture": "#texture" },
+        "south": { "texture": "#texture" },
+        "east": { "texture": "#texture" },
+        "west": { "texture": "#texture" },
+        "up": { "texture": "#texture" },
+        "down": { "texture": "#texture" }
+      }
+    }
+  ]
+}

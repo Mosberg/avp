@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "avp",
+  "version": "${version}",
+  "name": "Additional Villager Professions",
+  "description": "This mod adds new professions and related features for villagers in Minecraft.",
+  "authors": ["Mosberg!"],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "MIT",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["dk.mosberg.AVP"],
+    "client": ["dk.mosberg.client.AVPClient"],
+    "fabric-datagen": ["dk.mosberg.client.datagen.AVPDataGenerator"],
+    "modmenu": ["dk.mosberg.client.modmenu.AVPModMenu"]
+  },
+  "mixins": [
+    "avp.mixins.json",
+    {
+      "config": "avp.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "modmenu": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "update_checker": true
+    }
+  }
+}

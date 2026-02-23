@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "dk.mosberg.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": ["VillagerBrainMixin"],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

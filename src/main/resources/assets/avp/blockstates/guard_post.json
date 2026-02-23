@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "avp:block/guard_post", "y": 180 },
+    "facing=south": { "model": "avp:block/guard_post" },
+    "facing=west": { "model": "avp:block/guard_post", "y": 90 },
+    "facing=east": { "model": "avp:block/guard_post", "y": 270 }
+  }
+}

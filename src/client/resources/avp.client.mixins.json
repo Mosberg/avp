@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "package": "dk.mosberg.client.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["ExampleClientMixin"],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "entity.villager.warrior.work": {
+    "sounds": [{ "name": "avp:warrior_work" }]
+  }
+}
