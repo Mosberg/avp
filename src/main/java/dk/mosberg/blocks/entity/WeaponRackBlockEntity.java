@@ -25,7 +25,10 @@ public class WeaponRackBlockEntity extends BlockEntity {
     this.stored = stack;
   }
 
-  public void writeNbt(NbtCompound nbt) {
+  @Override
+  protected void writeNbt(NbtCompound nbt) {
+    super.writeNbt(nbt);
+
     if (!stored.isEmpty()) {
       NbtCompound itemTag = new NbtCompound();
       itemTag.putString("id", Registries.ITEM.getId(stored.getItem()).toString());
@@ -34,22 +37,19 @@ public class WeaponRackBlockEntity extends BlockEntity {
     }
   }
 
+  @Override
   public void readNbt(NbtCompound nbt) {
+    super.readNbt(nbt);
+
     if (nbt.contains("Item")) {
-      NbtCompound itemTag = nbt.getCompound("Item").orElse(null);
-      if (itemTag != null) {
-        String idStr = itemTag.getString("id").orElse("");
-        int count = itemTag.getInt("count").orElse(1);
-        Identifier id = Identifier.tryParse(idStr);
-        var item = id != null ? Registries.ITEM.get(id) : null;
-        if (item != null) {
-          stored = new ItemStack(item, count);
-        } else {
-          stored = ItemStack.EMPTY;
-        }
-      } else {
-        stored = ItemStack.EMPTY;
-      }
+      NbtCompound itemTag = nbt.getCompound("Item");
+      String idStr = itemTag.getString("id");
+      int count = itemTag.getInt("count");
+
+      Identifier id = Identifier.tryParse(idStr);
+      var item = id != null ? Registries.ITEM.get(id) : null;
+
+      stored = item != null ? new ItemStack(item, count) : ItemStack.EMPTY;
     } else {
       stored = ItemStack.EMPTY;
     }

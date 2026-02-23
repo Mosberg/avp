@@ -9,11 +9,11 @@ import net.minecraft.world.BlockView;
 
 public class TrainingDummyBlock extends Block {
 
-  private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 16, 12);
-
   public TrainingDummyBlock(Settings settings) {
     super(settings);
   }
+
+  private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 16, 12);
 
   @Override
   public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {

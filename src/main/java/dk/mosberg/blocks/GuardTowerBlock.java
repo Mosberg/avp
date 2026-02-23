@@ -9,11 +9,11 @@ import net.minecraft.world.BlockView;
 
 public class GuardTowerBlock extends Block {
 
-  private static final VoxelShape SHAPE = Block.createCuboidShape(2, 0, 2, 14, 32, 14);
-
   public GuardTowerBlock(Settings settings) {
     super(settings);
   }
+
+  private static final VoxelShape SHAPE = Block.createCuboidShape(2, 0, 2, 14, 32, 14);
 
   @Override
   public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
