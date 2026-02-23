@@ -3,6 +3,7 @@ package dk.mosberg.blocks;
 import org.jetbrains.annotations.Nullable;
 
 import dk.mosberg.blocks.entity.WeaponRackBlockEntity;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -17,7 +18,7 @@ import net.minecraft.world.World;
 public class WeaponRackBlock extends BlockWithEntity {
 
   public WeaponRackBlock(Settings settings) {
-    super(settings.nonOpaque());
+    super(settings);
   }
 
   @Nullable
@@ -27,25 +28,30 @@ public class WeaponRackBlock extends BlockWithEntity {
   }
 
   @Override
+  public BlockRenderType getRenderType(BlockState state) {
+    return BlockRenderType.MODEL;
+  }
+
+  @Override
   public ActionResult onUse(BlockState state, World world, BlockPos pos,
       PlayerEntity player, Hand hand, BlockHitResult hit) {
     if (world.isClient)
       return ActionResult.SUCCESS;
 
-    WeaponRackBlockEntity be = (WeaponRackBlockEntity) world.getBlockEntity(pos);
-    if (be == null)
+    BlockEntity be = world.getBlockEntity(pos);
+    if (!(be instanceof WeaponRackBlockEntity rack))
       return ActionResult.PASS;
 
     ItemStack held = player.getStackInHand(hand);
 
-    if (!held.isEmpty() && be.getStored().isEmpty()) {
-      be.setStored(held.split(1));
-      be.markDirty();
+    if (!held.isEmpty() && rack.getStored().isEmpty()) {
+      rack.setStored(held.split(1));
+      rack.markDirty();
       return ActionResult.CONSUME;
-    } else if (!be.getStored().isEmpty()) {
-      player.giveItemStack(be.getStored());
-      be.setStored(ItemStack.EMPTY);
-      be.markDirty();
+    } else if (!rack.getStored().isEmpty()) {
+      player.giveItemStack(rack.getStored());
+      rack.setStored(ItemStack.EMPTY);
+      rack.markDirty();
       return ActionResult.CONSUME;
     }
 

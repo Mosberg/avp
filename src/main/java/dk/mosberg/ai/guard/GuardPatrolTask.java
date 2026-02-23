@@ -12,6 +12,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 
 public class GuardPatrolTask extends Task<VillagerEntity> {
+
   private final float speed;
 
   public GuardPatrolTask(float speed) {
@@ -27,7 +28,7 @@ public class GuardPatrolTask extends Task<VillagerEntity> {
 
   @Override
   protected void run(ServerWorld world, VillagerEntity villager, long time) {
-    BlockPos center = villager.getVillageCenter().orElse(villager.getBlockPos());
+    BlockPos center = villager.getBlockPos();
     BlockPos patrolPos = center.add(
         world.random.nextBetween(-12, 12),
         0,

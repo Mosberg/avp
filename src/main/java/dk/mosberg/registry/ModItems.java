@@ -8,6 +8,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModItems {
+
   public static final Item WARRIOR_TRAINING_POST = register("warrior_training_post",
       new BlockItem(ModBlocks.WARRIOR_TRAINING_POST, new Item.Settings()));
 
@@ -18,7 +19,7 @@ public class ModItems {
       new BlockItem(ModBlocks.GUARD_TOWER, new Item.Settings()));
 
   private static Item register(String id, Item item) {
-    return Registry.register(Registries.ITEM, new Identifier(AVP.MODID, id), item);
+    return Registry.register(Registries.ITEM, new Identifier(AVP.MOD_ID, id), item);
   }
 
   public static void register() {

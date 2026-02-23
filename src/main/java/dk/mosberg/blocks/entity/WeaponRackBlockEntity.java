@@ -26,12 +26,18 @@ public class WeaponRackBlockEntity extends BlockEntity {
   @Override
   protected void writeNbt(NbtCompound nbt) {
     super.writeNbt(nbt);
-    nbt.put("Item", stored.writeNbt(new NbtCompound()));
+    if (!stored.isEmpty()) {
+      nbt.put("Item", stored.writeNbt(new NbtCompound()));
+    }
   }
 
   @Override
   public void readNbt(NbtCompound nbt) {
     super.readNbt(nbt);
-    stored = ItemStack.fromNbt(nbt.getCompound("Item"));
+    if (nbt.contains("Item")) {
+      stored = ItemStack.fromNbt(nbt.getCompound("Item"));
+    } else {
+      stored = ItemStack.EMPTY;
+    }
   }
 }

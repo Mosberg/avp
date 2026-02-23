@@ -7,32 +7,25 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 
 public class VillageDefenseManager {
 
   public static void onGuardDetectHostile(ServerWorld world, VillagerEntity guard, BlockPos threatPos) {
-    // Buff nearby warriors
     buffNearbyWarriors(world, threatPos);
-
-    // Make villagers run indoors (simple: panic effect)
     panicVillagers(world, threatPos);
   }
 
   public static void onWarriorEnterCombat(ServerWorld world, VillagerEntity warrior, BlockPos threatPos) {
-    // Strengthen nearby players
     buffNearbyPlayers(world, threatPos);
-
-    // Optional: spawn extra iron golems if village is under heavy attack
-    // spawnReinforcements(world, threatPos);
   }
 
   private static void buffNearbyWarriors(ServerWorld world, BlockPos center) {
     List<VillagerEntity> warriors = world.getEntitiesByClass(
         VillagerEntity.class,
-        new net.minecraft.util.math.Box(center).expand(16),
+        new Box(center).expand(16),
         v -> v.getVillagerData().getProfession() == ModProfessions.WARRIOR);
 
     for (VillagerEntity warrior : warriors) {
@@ -44,7 +37,7 @@ public class VillageDefenseManager {
   private static void panicVillagers(ServerWorld world, BlockPos center) {
     List<VillagerEntity> villagers = world.getEntitiesByClass(
         VillagerEntity.class,
-        new net.minecraft.util.math.Box(center).expand(24),
+        new Box(center).expand(24),
         v -> v.getVillagerData().getProfession() != ModProfessions.WARRIOR
             && v.getVillagerData().getProfession() != ModProfessions.GUARD);
 
@@ -55,7 +48,7 @@ public class VillageDefenseManager {
   }
 
   private static void buffNearbyPlayers(ServerWorld world, BlockPos center) {
-    List<ServerPlayerEntity> players = world
+    List<PlayerEntity> players = world
         .getPlayers(p -> p.squaredDistanceTo(center.getX(), center.getY(), center.getZ()) < 16 * 16);
 
     for (PlayerEntity player : players) {

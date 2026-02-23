@@ -1,5 +1,8 @@
 {
-  "entity.villager.warrior.work": {
+  "warrior_work": {
     "sounds": [{ "name": "avp:warrior_work" }]
+  },
+  "guard_alarm": {
+    "sounds": [{ "name": "avp:guard_alarm" }]
   }
 }

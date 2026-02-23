@@ -39,13 +39,8 @@ public class GuardAlarmTask extends Task<VillagerEntity> {
     if (hostileOpt.isEmpty())
       return;
 
-    VillageDefenseManager.onGuardDetectHostile(world, villager, hostileOpt.get().getBlockPos());
+    LivingEntity hostile = hostileOpt.get();
 
-    LevelingSystem.onGuardAlarm(world, villager);
-    GuardAbilities.applyAlarmEffects(world, villager);
-    VillageDefenseManager.onGuardDetectHostile(world, villager, hostileOpt.get().getBlockPos());
-
-    // Play alarm sound
     world.playSound(
         null,
         villager.getBlockPos(),
@@ -54,12 +49,15 @@ public class GuardAlarmTask extends Task<VillagerEntity> {
         1.0f,
         1.0f);
 
-    // Try to ring nearest bell
     BlockPos villPos = villager.getBlockPos();
     BlockPos.iterateOutwards(villPos, 16, 8, 16).forEach(pos -> {
       if (world.getBlockState(pos).isOf(Blocks.BELL)) {
         world.syncWorldEvent(null, WorldEvents.BELL_RING, pos, 0);
       }
     });
+
+    LevelingSystem.onGuardAlarm(world, villager);
+    GuardAbilities.applyAlarmEffects(world, villager);
+    VillageDefenseManager.onGuardDetectHostile(world, villager, hostile.getBlockPos());
   }
 }

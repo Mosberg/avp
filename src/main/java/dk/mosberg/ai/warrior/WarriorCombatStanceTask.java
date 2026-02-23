@@ -24,7 +24,6 @@ public class WarriorCombatStanceTask extends Task<VillagerEntity> {
   @Override
   protected void run(ServerWorld world, VillagerEntity villager, long time) {
     boolean hasHostile = villager.getBrain().getOptionalMemory(MemoryModuleType.NEAREST_HOSTILE).isPresent();
-
-    villager.setSprinting(hasHostile); // placeholder for stance flag
+    villager.setSprinting(hasHostile);
   }
 }

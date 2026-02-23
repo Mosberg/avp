@@ -1,5 +1,7 @@
 {
-  "parent": "block/block",
+  "format_version": "1.21.11",
+  "credit": "Made by Mosberg",
+  "texture_size": [16, 16],
   "textures": {
     "texture": "avp:block/guard_post"
   },
@@ -8,12 +10,12 @@
       "from": [1, 4, 0],
       "to": [15, 12, 2],
       "faces": {
-        "north": { "texture": "#texture" },
-        "south": { "texture": "#texture" },
-        "east": { "texture": "#texture" },
-        "west": { "texture": "#texture" },
-        "up": { "texture": "#texture" },
-        "down": { "texture": "#texture" }
+        "north": { "uv": [1, 8, 15, 16], "texture": "#texture" },
+        "east": { "uv": [8, 8, 10, 16], "texture": "#texture" },
+        "south": { "uv": [1, 8, 15, 16], "texture": "#texture" },
+        "west": { "uv": [8, 8, 10, 16], "texture": "#texture" },
+        "up": { "uv": [15, 0, 1, 2], "texture": "#texture" },
+        "down": { "uv": [1, 5, 15, 7], "texture": "#texture" }
       }
     }
   ]

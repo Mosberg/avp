@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.poi.PointOfInterestType;
 
 public class ModPOIs {
+
   public static final RegistryKey<PointOfInterestType> WARRIOR_POI = RegistryKey.of(
       Registries.POINT_OF_INTEREST_TYPE.getKey(),
       new Identifier(AVP.MOD_ID, "warrior_poi"));

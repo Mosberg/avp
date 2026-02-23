@@ -16,6 +16,7 @@ import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.server.world.ServerWorld;
 
 public class WarriorCombatTask extends Task<VillagerEntity> {
+
   private final float speed;
 
   public WarriorCombatTask(float speed) {
@@ -37,16 +38,11 @@ public class WarriorCombatTask extends Task<VillagerEntity> {
       return;
 
     LivingEntity target = hostileOpt.get();
-
-    VillageDefenseManager.onWarriorEnterCombat(world, villager, target.getBlockPos());
+    villager.getNavigation().startMovingTo(target, speed);
+    villager.setSprinting(true);
 
     LevelingSystem.onWarriorCombat(world, villager);
-    // Warrior buff aura
     WarriorAbilities.applyCombatAura(world, villager);
-
-    villager.getNavigation().startMovingTo(target, speed);
-
-    // “Combat stance” – you can later sync this to a custom animation
-    villager.setSprinting(true);
+    VillageDefenseManager.onWarriorEnterCombat(world, villager, target.getBlockPos());
   }
 }

@@ -16,7 +16,7 @@ import net.minecraft.entity.passive.VillagerEntity;
 public abstract class VillagerBrainMixin {
 
   @Inject(method = "createBrain", at = @At("RETURN"), cancellable = true)
-  private void injectCustomBrain(Dynamic<?> dynamic, CallbackInfoReturnable<Brain<VillagerEntity>> cir) {
+  private void avp$injectCustomBrain(Dynamic<?> dynamic, CallbackInfoReturnable<Brain<VillagerEntity>> cir) {
     Brain<VillagerEntity> brain = cir.getReturnValue();
     GuardBrainInjector.inject(brain);
     WarriorBrainInjector.inject(brain);

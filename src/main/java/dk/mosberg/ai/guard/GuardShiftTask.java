@@ -21,6 +21,6 @@ public class GuardShiftTask extends Task<VillagerEntity> {
   @Override
   protected void run(ServerWorld world, VillagerEntity villager, long time) {
     boolean isNight = world.isNight();
-    villager.setNoDrag(isNight); // just a cheap “on duty” flag; you can replace this
+    villager.setNoDrag(isNight); // cheap "on duty" flag placeholder
   }
 }

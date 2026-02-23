@@ -12,7 +12,7 @@ public class TrainingDummyBlock extends Block {
   private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 16, 12);
 
   public TrainingDummyBlock(Settings settings) {
-    super(settings.nonOpaque());
+    super(settings);
   }
 
   @Override

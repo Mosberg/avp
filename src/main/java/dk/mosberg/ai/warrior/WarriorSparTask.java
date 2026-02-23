@@ -32,12 +32,10 @@ public class WarriorSparTask extends Task<VillagerEntity> {
     if (partners.isEmpty())
       return;
 
-    LevelingSystem.onWarriorSpar(world, villager);
-
     VillagerEntity partner = partners.get(world.random.nextInt(partners.size()));
     villager.getLookControl().lookAt(partner);
     partner.getLookControl().lookAt(villager);
 
-    // You can hook into a custom animation system here
+    LevelingSystem.onWarriorSpar(world, villager);
   }
 }

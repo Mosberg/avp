@@ -6,7 +6,6 @@ import net.minecraft.server.world.ServerWorld;
 public class LevelingSystem {
 
   public static void register() {
-    // placeholder if you later want events or networking
   }
 
   public static void onWarriorSpar(ServerWorld world, VillagerEntity warrior) {
@@ -24,8 +23,5 @@ public class LevelingSystem {
   private static void addExperience(VillagerEntity villager, int amount) {
     int xp = villager.getExperience() + amount;
     villager.setExperience(xp);
-
-    // You can map XP to levels or trigger perks here
-    // e.g., every 10 XP, increase buff duration
   }
 }

@@ -7,6 +7,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 public class ModSounds {
+
   public static SoundEvent WARRIOR_WORK;
   public static SoundEvent GUARD_ALARM;
 

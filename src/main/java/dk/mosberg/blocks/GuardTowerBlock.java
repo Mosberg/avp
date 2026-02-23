@@ -12,7 +12,7 @@ public class GuardTowerBlock extends Block {
   private static final VoxelShape SHAPE = Block.createCuboidShape(2, 0, 2, 14, 32, 14);
 
   public GuardTowerBlock(Settings settings) {
-    super(settings.nonOpaque());
+    super(settings);
   }
 
   @Override

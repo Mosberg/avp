@@ -10,7 +10,6 @@ import net.minecraft.entity.passive.VillagerEntity;
 public class GuardBrainInjector {
 
   public static void inject(Brain<VillagerEntity> brain) {
-    // Add custom activities or extend existing ones
     addCoreTasks(brain);
     addIdleTasks(brain);
     addFightTasks(brain);
@@ -47,6 +46,5 @@ public class GuardBrainInjector {
   }
 
   public static void register() {
-    // called from AVP.onInitialize if you want any static setup
   }
 }
