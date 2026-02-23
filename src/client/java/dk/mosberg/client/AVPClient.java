@@ -9,6 +9,6 @@ public class AVPClient implements ClientModInitializer {
 
   @Override
   public void onInitializeClient() {
-    BlockEntityRendererFactories.register(ModBlockEntities.WEAPON_RACK, WeaponRackRenderer::new);
+    BlockEntityRendererFactories.register(ModBlockEntities.WEAPON_RACK, (ctx) -> new WeaponRackRenderer(ctx));
   }
 }

@@ -15,7 +15,7 @@ public class WarriorAbilities {
     List<VillagerEntity> allies = world.getEntitiesByClass(
         VillagerEntity.class,
         new Box(warrior.getBlockPos()).expand(8),
-        v -> v.getVillagerData().getProfession() == ModProfessions.WARRIOR);
+        v -> v.getVillagerData().profession().equals(ModProfessions.WARRIOR));
 
     for (VillagerEntity ally : allies) {
       ally.addStatusEffect(new StatusEffectInstance(

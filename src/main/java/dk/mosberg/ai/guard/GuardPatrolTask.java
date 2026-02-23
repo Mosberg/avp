@@ -6,12 +6,12 @@ import dk.mosberg.professions.ModProfessions;
 import net.minecraft.entity.ai.brain.MemoryModuleState;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.ai.brain.WalkTarget;
-import net.minecraft.entity.ai.brain.task.Task;
+import net.minecraft.entity.ai.brain.task.MultiTickTask;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 
-public class GuardPatrolTask extends Task<VillagerEntity> {
+public class GuardPatrolTask extends MultiTickTask<VillagerEntity> {
 
   private final float speed;
 
@@ -23,7 +23,7 @@ public class GuardPatrolTask extends Task<VillagerEntity> {
 
   @Override
   protected boolean shouldRun(ServerWorld world, VillagerEntity villager) {
-    return villager.getVillagerData().getProfession() == ModProfessions.GUARD;
+    return villager.getVillagerData().profession().equals(ModProfessions.GUARD);
   }
 
   @Override

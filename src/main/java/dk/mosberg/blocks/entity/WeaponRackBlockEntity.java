@@ -5,6 +5,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
 public class WeaponRackBlockEntity extends BlockEntity {
@@ -23,19 +25,31 @@ public class WeaponRackBlockEntity extends BlockEntity {
     this.stored = stack;
   }
 
-  @Override
-  protected void writeNbt(NbtCompound nbt) {
-    super.writeNbt(nbt);
+  public void writeNbt(NbtCompound nbt) {
     if (!stored.isEmpty()) {
-      nbt.put("Item", stored.writeNbt(new NbtCompound()));
+      NbtCompound itemTag = new NbtCompound();
+      itemTag.putString("id", Registries.ITEM.getId(stored.getItem()).toString());
+      itemTag.putInt("count", stored.getCount());
+      nbt.put("Item", itemTag);
     }
   }
 
-  @Override
   public void readNbt(NbtCompound nbt) {
-    super.readNbt(nbt);
     if (nbt.contains("Item")) {
-      stored = ItemStack.fromNbt(nbt.getCompound("Item"));
+      NbtCompound itemTag = nbt.getCompound("Item").orElse(null);
+      if (itemTag != null) {
+        String idStr = itemTag.getString("id").orElse("");
+        int count = itemTag.getInt("count").orElse(1);
+        Identifier id = Identifier.tryParse(idStr);
+        var item = id != null ? Registries.ITEM.get(id) : null;
+        if (item != null) {
+          stored = new ItemStack(item, count);
+        } else {
+          stored = ItemStack.EMPTY;
+        }
+      } else {
+        stored = ItemStack.EMPTY;
+      }
     } else {
       stored = ItemStack.EMPTY;
     }

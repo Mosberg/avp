@@ -1,0 +1,13 @@
+{
+  "structures": [
+    { "structure": "avp:guard_tower", "weight": 1 },
+    { "structure": "avp:warrior_training_post", "weight": 1 },
+    { "structure": "avp:weapon_rack", "weight": 2 }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 32,
+    "separation": 8,
+    "salt": 123456789
+  }
+}

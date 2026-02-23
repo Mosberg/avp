@@ -11,11 +11,11 @@ import dk.mosberg.professions.ModProfessions;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.brain.MemoryModuleState;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
-import net.minecraft.entity.ai.brain.task.Task;
+import net.minecraft.entity.ai.brain.task.MultiTickTask;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.server.world.ServerWorld;
 
-public class WarriorCombatTask extends Task<VillagerEntity> {
+public class WarriorCombatTask extends MultiTickTask<VillagerEntity> {
 
   private final float speed;
 
@@ -27,14 +27,15 @@ public class WarriorCombatTask extends Task<VillagerEntity> {
 
   @Override
   protected boolean shouldRun(ServerWorld world, VillagerEntity villager) {
-    return villager.getVillagerData().getProfession() == ModProfessions.WARRIOR;
+    return villager.getVillagerData().profession().equals(ModProfessions.WARRIOR);
   }
 
   @Override
   protected void run(ServerWorld world, VillagerEntity villager, long time) {
     Optional<LivingEntity> hostileOpt = villager.getBrain().getOptionalMemory(MemoryModuleType.NEAREST_HOSTILE);
 
-    if (hostileOpt.isEmpty())
+    // Fix: Null check before isEmpty()
+    if (hostileOpt == null || hostileOpt.isEmpty())
       return;
 
     LivingEntity target = hostileOpt.get();

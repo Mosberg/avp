@@ -6,7 +6,7 @@ import dk.mosberg.professions.ModProfessions;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -26,7 +26,7 @@ public class VillageDefenseManager {
     List<VillagerEntity> warriors = world.getEntitiesByClass(
         VillagerEntity.class,
         new Box(center).expand(16),
-        v -> v.getVillagerData().getProfession() == ModProfessions.WARRIOR);
+        v -> v.getVillagerData().profession().equals(ModProfessions.WARRIOR));
 
     for (VillagerEntity warrior : warriors) {
       warrior.addStatusEffect(new StatusEffectInstance(
@@ -38,8 +38,8 @@ public class VillageDefenseManager {
     List<VillagerEntity> villagers = world.getEntitiesByClass(
         VillagerEntity.class,
         new Box(center).expand(24),
-        v -> v.getVillagerData().getProfession() != ModProfessions.WARRIOR
-            && v.getVillagerData().getProfession() != ModProfessions.GUARD);
+        v -> !v.getVillagerData().profession().equals(ModProfessions.WARRIOR)
+            && !v.getVillagerData().profession().equals(ModProfessions.GUARD));
 
     for (VillagerEntity villager : villagers) {
       villager.addStatusEffect(new StatusEffectInstance(
@@ -48,10 +48,11 @@ public class VillageDefenseManager {
   }
 
   private static void buffNearbyPlayers(ServerWorld world, BlockPos center) {
-    List<PlayerEntity> players = world
+    // Fix: Use List<ServerPlayerEntity> instead of List<PlayerEntity>
+    List<ServerPlayerEntity> players = world
         .getPlayers(p -> p.squaredDistanceTo(center.getX(), center.getY(), center.getZ()) < 16 * 16);
 
-    for (PlayerEntity player : players) {
+    for (ServerPlayerEntity player : players) {
       player.addStatusEffect(new StatusEffectInstance(
           StatusEffects.STRENGTH, 20 * 15, 0, true, true));
     }

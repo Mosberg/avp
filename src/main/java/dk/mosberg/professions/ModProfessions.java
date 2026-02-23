@@ -26,9 +26,9 @@ public class ModProfessions {
       SoundEvent workSound) {
     return Registry.register(
         Registries.VILLAGER_PROFESSION,
-        new Identifier(AVP.MOD_ID, id),
+        Identifier.of(AVP.MOD_ID, id),
         new VillagerProfession(
-            id,
+            net.minecraft.text.Text.literal(id),
             entry -> entry.matchesKey(poiKey),
             entry -> entry.matchesKey(poiKey),
             ImmutableSet.of(),

@@ -20,7 +20,6 @@ public class GuardBrainInjector {
         Activity.CORE,
         0,
         ImmutableList.<Task<? super VillagerEntity>>builder()
-            .addAll(brain.getTaskList(Activity.CORE))
             .add(new GuardShiftTask())
             .build());
   }
@@ -30,7 +29,6 @@ public class GuardBrainInjector {
         Activity.IDLE,
         10,
         ImmutableList.<Task<? super VillagerEntity>>builder()
-            .addAll(brain.getTaskList(Activity.IDLE))
             .add(new GuardPatrolTask(0.6f))
             .build());
   }
@@ -40,7 +38,6 @@ public class GuardBrainInjector {
         Activity.FIGHT,
         10,
         ImmutableList.<Task<? super VillagerEntity>>builder()
-            .addAll(brain.getTaskList(Activity.FIGHT))
             .add(new GuardAlarmTask())
             .build());
   }

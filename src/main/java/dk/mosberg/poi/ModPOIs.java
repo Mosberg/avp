@@ -15,11 +15,11 @@ public class ModPOIs {
 
   public static final RegistryKey<PointOfInterestType> WARRIOR_POI = RegistryKey.of(
       Registries.POINT_OF_INTEREST_TYPE.getKey(),
-      new Identifier(AVP.MOD_ID, "warrior_poi"));
+      Identifier.of(AVP.MOD_ID, "warrior_poi"));
 
   public static final RegistryKey<PointOfInterestType> GUARD_POI = RegistryKey.of(
       Registries.POINT_OF_INTEREST_TYPE.getKey(),
-      new Identifier(AVP.MOD_ID, "guard_poi"));
+      Identifier.of(AVP.MOD_ID, "guard_poi"));
 
   public static void register() {
     register(WARRIOR_POI, ModBlocks.WARRIOR_TRAINING_POST);

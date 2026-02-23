@@ -13,14 +13,13 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.brain.MemoryModuleState;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
-import net.minecraft.entity.ai.brain.task.Task;
+import net.minecraft.entity.ai.brain.task.MultiTickTask;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldEvents;
 
-public class GuardAlarmTask extends Task<VillagerEntity> {
+public class GuardAlarmTask extends MultiTickTask<VillagerEntity> {
 
   public GuardAlarmTask() {
     super(ImmutableMap.of(
@@ -29,33 +28,23 @@ public class GuardAlarmTask extends Task<VillagerEntity> {
 
   @Override
   protected boolean shouldRun(ServerWorld world, VillagerEntity villager) {
-    return villager.getVillagerData().getProfession() == ModProfessions.GUARD;
+    return villager.getVillagerData().profession().equals(ModProfessions.GUARD);
   }
 
   @Override
   protected void run(ServerWorld world, VillagerEntity villager, long time) {
     Optional<LivingEntity> hostileOpt = villager.getBrain().getOptionalMemory(MemoryModuleType.NEAREST_HOSTILE);
-
-    if (hostileOpt.isEmpty())
+    // Fix: Null check before isEmpty()
+    if (hostileOpt == null || hostileOpt.isEmpty())
       return;
-
     LivingEntity hostile = hostileOpt.get();
-
-    world.playSound(
-        null,
-        villager.getBlockPos(),
-        ModSounds.GUARD_ALARM,
-        SoundCategory.NEUTRAL,
-        1.0f,
-        1.0f);
-
+    world.playSound(null, villager.getBlockPos(), ModSounds.GUARD_ALARM, SoundCategory.NEUTRAL, 1.0f, 1.0f);
     BlockPos villPos = villager.getBlockPos();
     BlockPos.iterateOutwards(villPos, 16, 8, 16).forEach(pos -> {
       if (world.getBlockState(pos).isOf(Blocks.BELL)) {
-        world.syncWorldEvent(null, WorldEvents.BELL_RING, pos, 0);
+        world.syncWorldEvent(null, 3002, pos, 0); // 3002 = bell ring event
       }
     });
-
     LevelingSystem.onGuardAlarm(world, villager);
     GuardAbilities.applyAlarmEffects(world, villager);
     VillageDefenseManager.onGuardDetectHostile(world, villager, hostile.getBlockPos());

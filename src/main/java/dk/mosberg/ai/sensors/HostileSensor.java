@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.ai.brain.sensor.Sensor;
 import net.minecraft.entity.mob.Monster;
@@ -22,8 +23,8 @@ public class HostileSensor extends Sensor<VillagerEntity> {
   @Override
   protected void sense(ServerWorld world, VillagerEntity villager) {
     Box box = villager.getBoundingBox().expand(24.0);
-    List<Monster> hostiles = world.getEntitiesByClass(Monster.class, box,
-        e -> e.isAlive() && !e.isRemoved());
+    List<LivingEntity> hostiles = world.getEntitiesByClass(LivingEntity.class, box,
+        e -> e instanceof Monster && e.isAlive() && !e.isRemoved());
 
     if (!hostiles.isEmpty()) {
       villager.getBrain().remember(MemoryModuleType.NEAREST_HOSTILE, hostiles.get(0));

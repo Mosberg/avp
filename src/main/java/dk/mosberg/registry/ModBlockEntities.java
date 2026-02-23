@@ -17,12 +17,12 @@ public class ModBlockEntities {
   public static void register() {
     WEAPON_RACK = Registry.register(
         Registries.BLOCK_ENTITY_TYPE,
-        new Identifier(AVP.MOD_ID, "weapon_rack"),
+        Identifier.of(AVP.MOD_ID, "weapon_rack"),
         FabricBlockEntityTypeBuilder.create(WeaponRackBlockEntity::new, ModBlocks.GUARD_POST).build());
 
     TRAINING_DUMMY = Registry.register(
         Registries.BLOCK_ENTITY_TYPE,
-        new Identifier(AVP.MOD_ID, "training_dummy"),
+        Identifier.of(AVP.MOD_ID, "training_dummy"),
         FabricBlockEntityTypeBuilder.create(TrainingDummyBlockEntity::new, ModBlocks.WARRIOR_TRAINING_POST).build());
   }
 }

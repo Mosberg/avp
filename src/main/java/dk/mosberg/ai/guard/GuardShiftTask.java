@@ -3,11 +3,11 @@ package dk.mosberg.ai.guard;
 import com.google.common.collect.ImmutableMap;
 
 import dk.mosberg.professions.ModProfessions;
-import net.minecraft.entity.ai.brain.task.Task;
+import net.minecraft.entity.ai.brain.task.MultiTickTask;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.server.world.ServerWorld;
 
-public class GuardShiftTask extends Task<VillagerEntity> {
+public class GuardShiftTask extends MultiTickTask<VillagerEntity> {
 
   public GuardShiftTask() {
     super(ImmutableMap.of());
@@ -15,7 +15,7 @@ public class GuardShiftTask extends Task<VillagerEntity> {
 
   @Override
   protected boolean shouldRun(ServerWorld world, VillagerEntity villager) {
-    return villager.getVillagerData().getProfession() == ModProfessions.GUARD;
+    return villager.getVillagerData().profession().equals(ModProfessions.GUARD);
   }
 
   @Override

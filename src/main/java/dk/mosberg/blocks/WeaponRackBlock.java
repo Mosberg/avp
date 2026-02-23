@@ -3,9 +3,9 @@ package dk.mosberg.blocks;
 import org.jetbrains.annotations.Nullable;
 
 import dk.mosberg.blocks.entity.WeaponRackBlockEntity;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -15,14 +15,13 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class WeaponRackBlock extends BlockWithEntity {
+public class WeaponRackBlock extends Block {
 
   public WeaponRackBlock(Settings settings) {
     super(settings);
   }
 
   @Nullable
-  @Override
   public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
     return new WeaponRackBlockEntity(pos, state);
   }
@@ -32,10 +31,19 @@ public class WeaponRackBlock extends BlockWithEntity {
     return BlockRenderType.MODEL;
   }
 
-  @Override
   public ActionResult onUse(BlockState state, World world, BlockPos pos,
       PlayerEntity player, Hand hand, BlockHitResult hit) {
-    if (world.isClient)
+    // Use isClient() if available, otherwise fallback to isClient field
+    boolean isClient = false;
+    try {
+      isClient = (boolean) World.class.getMethod("isClient").invoke(world);
+    } catch (Exception e) {
+      try {
+        isClient = world.getClass().getField("isClient").getBoolean(world);
+      } catch (Exception ignored) {
+      }
+    }
+    if (isClient)
       return ActionResult.SUCCESS;
 
     BlockEntity be = world.getBlockEntity(pos);

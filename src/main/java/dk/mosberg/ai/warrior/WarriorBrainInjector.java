@@ -19,7 +19,6 @@ public class WarriorBrainInjector {
         Activity.IDLE,
         20,
         ImmutableList.<Task<? super VillagerEntity>>builder()
-            .addAll(brain.getTaskList(Activity.IDLE))
             .add(new WarriorSparTask())
             .build());
   }
@@ -29,7 +28,6 @@ public class WarriorBrainInjector {
         Activity.FIGHT,
         20,
         ImmutableList.<Task<? super VillagerEntity>>builder()
-            .addAll(brain.getTaskList(Activity.FIGHT))
             .add(new WarriorCombatStanceTask())
             .add(new WarriorCombatTask(1.2f))
             .build());

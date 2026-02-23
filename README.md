@@ -2,6 +2,10 @@
 
 ## Use these Exact Versions and Dependencies - Links can be used to look up resources and documentation for each version.
 
+The links provided will take you to the official documentation or repositories for each version, ensuring you have the correct resources to work with. Make sure to check these versions against your project setup to avoid compatibility issues.
+
+The Overview page is the front page of this API document and provides a list of all packages with a summary for each. This page can also contain an overall description of the set of packages.
+
 ```properties
 # Mod Properties
 mod_version=1.0.0
@@ -11,12 +15,12 @@ archives_base_name=avp
 # Fabric Properties
 # check these on https://fabricmc.net/develop
 minecraft_version=1.21.11 # https://assets.mcasset.cloud/1.21.11/mappings/client.txt
-yarn_mappings=1.21.11+build.4 # https://maven.fabricmc.net/docs/yarn-1.21.11+build.4/
-loader_version=0.18.4 # https://maven.fabricmc.net/docs/fabric-loader-0.18.4/
+yarn_mappings=1.21.11+build.4 # https://maven.fabricmc.net/docs/yarn-1.21.11+build.4/index.html
+loader_version=0.18.4 # https://maven.fabricmc.net/docs/fabric-loader-0.18.4/index.html
 loom_version=1.15-SNAPSHOT # https://maven.fabricmc.net/fabric-loom/fabric-loom.gradle.plugin/1.15-SNAPSHOT/
 
 # Dependencies
-fabric_api_version=0.141.3+1.21.11 # https://maven.fabricmc.net/docs/fabric-api-0.141.3+1.21.11/
+fabric_api_version=0.141.3+1.21.11 # https://maven.fabricmc.net/docs/fabric-api-0.141.3+1.21.11/index.html
 geckolib_fabric_version=5.4.3 # https://wiki.geckolib.com/docs/geckolib5/
 
 # Suggested dependencies

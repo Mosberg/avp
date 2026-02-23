@@ -15,7 +15,7 @@ public class GuardAbilities {
     List<VillagerEntity> guards = world.getEntitiesByClass(
         VillagerEntity.class,
         new Box(guard.getBlockPos()).expand(16),
-        v -> v.getVillagerData().getProfession() == ModProfessions.GUARD);
+        v -> v.getVillagerData().profession().equals(ModProfessions.GUARD));
 
     for (VillagerEntity g : guards) {
       g.addStatusEffect(new StatusEffectInstance(

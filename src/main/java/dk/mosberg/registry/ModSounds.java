@@ -17,7 +17,7 @@ public class ModSounds {
   }
 
   private static SoundEvent register(String id) {
-    Identifier identifier = new Identifier(AVP.MOD_ID, id);
+    Identifier identifier = Identifier.of(AVP.MOD_ID, id);
     return Registry.register(Registries.SOUND_EVENT, identifier, SoundEvent.of(identifier));
   }
 }
