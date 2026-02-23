@@ -671,69 +671,157 @@ Once you confirm, I’ll generate **Phase 2: Full AI implementation**, then **Ph
 Here is the complete structure your mod will use:
 
 ```
-src/main/java/dk/mosberg/
-    AVP.java
-
-    ai/
-        guard/
-            GuardPatrolTask.java
-            GuardShiftTask.java
-            GuardAlarmTask.java
-            GuardBrainInjector.java
-        warrior/
-            WarriorCombatTask.java
-            WarriorSparTask.java
-            WarriorBrainInjector.java
-        sensors/
-            HostileSensor.java
-            PatrolPointSensor.java
-
-    abilities/
-        GuardAbilities.java
-        WarriorAbilities.java
-        LevelingSystem.java
-
-    blocks/
-        TrainingDummyBlock.java
-        TrainingDummyBlockEntity.java
-        WeaponRackBlock.java
-        WeaponRackBlockEntity.java
-        GuardTowerBlock.java
-
-    entities/
-        mixin/
-            VillagerBrainMixin.java
-            VillagerProfessionMixin.java
-
-    poi/
-        ModPOIs.java
-
-    professions/
-        ModProfessions.java
-
-    registry/
-        ModBlocks.java
-        ModItems.java
-        ModSounds.java
-        ModModels.java
-
-src/main/resources/
-    assets/avp/
-        blockstates/
-        models/block/
-        models/item/
-        textures/block/
-        textures/entity/villager/profession/
-        textures/entity/villager/type/
-        sounds/
-        sounds.json
-
-    data/avp/
-        poi/
-        villager_professions/
-        trades/
-        tags/blocks/
-        tags/items/
+src
+ ┣ client
+ ┃ ┣ java
+ ┃ ┃ ┗ dk
+ ┃ ┃ ┃ ┗ mosberg
+ ┃ ┃ ┃ ┃ ┗ client
+ ┃ ┃ ┃ ┃ ┃ ┣ datagen
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ AVPDataGenerator.java
+ ┃ ┃ ┃ ┃ ┃ ┣ mixin
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ PlaceholderClientMixin.java
+ ┃ ┃ ┃ ┃ ┃ ┣ modmenu
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ AVPModMenu.java
+ ┃ ┃ ┃ ┃ ┃ ┣ render
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ WeaponRackRenderer.java
+ ┃ ┃ ┃ ┃ ┃ ┗ AVPClient.java
+ ┃ ┗ resources
+ ┃ ┃ ┗ avp.client.mixins.json
+ ┗ main
+ ┃ ┣ java
+ ┃ ┃ ┗ dk
+ ┃ ┃ ┃ ┗ mosberg
+ ┃ ┃ ┃ ┃ ┣ abilities
+ ┃ ┃ ┃ ┃ ┃ ┣ GuardAbilities.java
+ ┃ ┃ ┃ ┃ ┃ ┣ LevelingSystem.java
+ ┃ ┃ ┃ ┃ ┃ ┣ VillageDefenseManager.java
+ ┃ ┃ ┃ ┃ ┃ ┗ WarriorAbilities.java
+ ┃ ┃ ┃ ┃ ┣ ai
+ ┃ ┃ ┃ ┃ ┃ ┣ guard
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ GuardAlarmTask.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ GuardBrainInjector.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ GuardPatrolTask.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ GuardShiftTask.java
+ ┃ ┃ ┃ ┃ ┃ ┣ sensors
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ HostileSensor.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ PatrolPointSensor.java
+ ┃ ┃ ┃ ┃ ┃ ┗ warrior
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ WarriorBrainInjector.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ WarriorCombatStanceTask.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ WarriorCombatTask.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ WarriorSparTask.java
+ ┃ ┃ ┃ ┃ ┣ blocks
+ ┃ ┃ ┃ ┃ ┃ ┣ entity
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ TrainingDummyBlockEntity.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ WeaponRackBlockEntity.java
+ ┃ ┃ ┃ ┃ ┃ ┣ GuardTowerBlock.java
+ ┃ ┃ ┃ ┃ ┃ ┣ TrainingDummyBlock.java
+ ┃ ┃ ┃ ┃ ┃ ┗ WeaponRackBlock.java
+ ┃ ┃ ┃ ┃ ┣ mixin
+ ┃ ┃ ┃ ┃ ┃ ┣ VillagerBrainMixin.java
+ ┃ ┃ ┃ ┃ ┃ ┗ VillagerProfessionMixin.java
+ ┃ ┃ ┃ ┃ ┣ poi
+ ┃ ┃ ┃ ┃ ┃ ┗ ModPOIs.java
+ ┃ ┃ ┃ ┃ ┣ professions
+ ┃ ┃ ┃ ┃ ┃ ┗ ModProfessions.java
+ ┃ ┃ ┃ ┃ ┣ registry
+ ┃ ┃ ┃ ┃ ┃ ┣ ModBlockEntities.java
+ ┃ ┃ ┃ ┃ ┃ ┣ ModBlocks.java
+ ┃ ┃ ┃ ┃ ┃ ┣ ModItems.java
+ ┃ ┃ ┃ ┃ ┃ ┣ ModModels.java
+ ┃ ┃ ┃ ┃ ┃ ┗ ModSounds.java
+ ┃ ┃ ┃ ┃ ┗ AVP.java
+ ┃ ┗ resources
+ ┃ ┃ ┣ assets
+ ┃ ┃ ┃ ┗ avp
+ ┃ ┃ ┃ ┃ ┣ blockstates
+ ┃ ┃ ┃ ┃ ┃ ┣ guard_post.json
+ ┃ ┃ ┃ ┃ ┃ ┣ guard_tower.json
+ ┃ ┃ ┃ ┃ ┃ ┗ warrior_training_post.json
+ ┃ ┃ ┃ ┃ ┣ geckolib
+ ┃ ┃ ┃ ┃ ┃ ┗ animations
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ warrior_combat.controller.json
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ warrior_combat.geo.json
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ warrior_combat_stance.json
+ ┃ ┃ ┃ ┃ ┣ items
+ ┃ ┃ ┃ ┃ ┃ ┣ guard_post.json
+ ┃ ┃ ┃ ┃ ┃ ┣ guard_tower.json
+ ┃ ┃ ┃ ┃ ┃ ┗ warrior_training_post.json
+ ┃ ┃ ┃ ┃ ┣ models
+ ┃ ┃ ┃ ┃ ┃ ┣ block
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard_post.json
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard_tower.json
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ warrior_training_post.json
+ ┃ ┃ ┃ ┃ ┃ ┗ item
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard_post.json
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard_tower.json
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ warrior_training_post.json
+ ┃ ┃ ┃ ┃ ┣ sounds
+ ┃ ┃ ┃ ┃ ┃ ┣ guard_alarm.ogg
+ ┃ ┃ ┃ ┃ ┃ ┗ warrior_work.ogg
+ ┃ ┃ ┃ ┃ ┣ textures
+ ┃ ┃ ┃ ┃ ┃ ┣ block
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard_post.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard_tower.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ warrior_training_post.png
+ ┃ ┃ ┃ ┃ ┃ ┗ entity
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ villager
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ profession
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard.png.mcmeta
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ warrior.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ warrior.png.mcmeta
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ type
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard_desert.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard_desert.png.mcmeta
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard_jungle.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard_plains.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard_savanna.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard_snowy.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard_snowy.png.mcmeta
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard_swamp.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard_taiga.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ warrior_desert.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ warrior_desert.png.mcmeta
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ warrior_jungle.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ warrior_plains.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ warrior_savanna.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ warrior_snowy.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ warrior_snowy.png.mcmeta
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ warrior_swamp.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ warrior_taiga.png
+ ┃ ┃ ┃ ┃ ┗ sounds.json
+ ┃ ┃ ┣ data
+ ┃ ┃ ┃ ┗ avp
+ ┃ ┃ ┃ ┃ ┣ poi
+ ┃ ┃ ┃ ┃ ┃ ┣ guard_poi.json
+ ┃ ┃ ┃ ┃ ┃ ┗ warrior_poi.json
+ ┃ ┃ ┃ ┃ ┣ tags
+ ┃ ┃ ┃ ┃ ┃ ┣ block
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ guard_posts.json
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ warrior_posts.json
+ ┃ ┃ ┃ ┃ ┃ ┗ items
+ ┃ ┃ ┃ ┃ ┣ trades
+ ┃ ┃ ┃ ┃ ┃ ┣ guard.json
+ ┃ ┃ ┃ ┃ ┃ ┗ warrior.json
+ ┃ ┃ ┃ ┃ ┣ villager_professions
+ ┃ ┃ ┃ ┃ ┃ ┣ guard.json
+ ┃ ┃ ┃ ┃ ┃ ┗ warrior.json
+ ┃ ┃ ┃ ┃ ┗ villager_types
+ ┃ ┃ ┃ ┃ ┃ ┣ guard_desert.json
+ ┃ ┃ ┃ ┃ ┃ ┣ guard_plains.json
+ ┃ ┃ ┃ ┃ ┃ ┣ guard_savanna.json
+ ┃ ┃ ┃ ┃ ┃ ┣ guard_snowy.json
+ ┃ ┃ ┃ ┃ ┃ ┣ guard_taiga.json
+ ┃ ┃ ┃ ┃ ┃ ┣ warrior_desert.json
+ ┃ ┃ ┃ ┃ ┃ ┣ warrior_plains.json
+ ┃ ┃ ┃ ┃ ┃ ┣ warrior_savanna.json
+ ┃ ┃ ┃ ┃ ┃ ┣ warrior_snowy.json
+ ┃ ┃ ┃ ┃ ┃ ┗ warrior_taiga.json
+ ┃ ┃ ┣ avp.mixins.json
+ ┃ ┃ ┣ fabric.mod.json
+ ┃ ┃ ┗ icon.png
 ```
 
 This structure supports everything you asked for:  
@@ -3889,7 +3977,7 @@ If you want, next we can tighten anything that doesn’t compile under 1.21.11 o
 
 ---\*\*\*---
 
-Perfect, Rasmus — we’ll generate **all resources** for:
+Perfect, Mosberg — we’ll generate **all resources** for:
 
 ```
 assets/avp/
@@ -4396,3 +4484,228 @@ If you want, I can now generate:
 ### ✔ A full README.md for your mod
 
 Just tell me what you want next.
+
+---\*\*\*---
+
+Here you go, Mosberg — a **complete, polished, production‑ready `README.md`** for your mod _Additional Villager Professions_, written to match your project, your features, and your `fabric.mod.json` metadata.
+
+It’s structured like a real open‑source mod README: clean, professional, and informative, while still giving players a sense of what your mod adds.
+
+You can drop this directly into:
+
+```
+/README.md
+```
+
+---
+
+# 📘 **Additional Villager Professions (AVP)**
+
+### _A Fabric mod for Minecraft 1.21.11_
+
+Created by **Mosberg!**
+
+---
+
+## 🧩 Overview
+
+**Additional Villager Professions (AVP)** expands Minecraft’s village ecosystem with **new villager professions**, **unique job site blocks**, **advanced AI behaviors**, and **dynamic village defense mechanics**.
+
+This mod is built for:
+
+- **Minecraft:** 1.21.11
+- **Fabric Loader:** 0.18.4+
+- **Fabric API:** 0.141.3+1.21.11
+- **Java:** 21
+- **GeckoLib:** 5.4.3
+
+AVP integrates seamlessly into vanilla villages, adding depth, personality, and new emergent gameplay.
+
+---
+
+## 🛠️ Features
+
+### 🛡️ **New Professions**
+
+AVP introduces two fully‑fledged villager professions:
+
+#### **• Warrior**
+
+- Trains at the **Warrior Training Post**
+- Spars with other warriors
+- Enters a **combat stance** when enemies approach
+- Gains XP through sparring and combat
+- Provides **strength auras** to nearby allies
+- Uses custom GeckoLib animations
+
+#### **• Guard**
+
+- Works at the **Guard Post (Weapon Rack)**
+- Patrols village perimeters
+- Switches between **day/night guard shifts**
+- Rings bells and triggers alarms when detecting threats
+- Buffs nearby guards
+- Gains XP for defensive actions
+
+---
+
+## 🧱 **New Workstation Blocks**
+
+### **• Warrior Training Post**
+
+A 3D training dummy used by Warriors to practice combat.
+
+### **• Guard Post (Weapon Rack)**
+
+A functional weapon rack that can store and display a single item.
+
+### **• Guard Tower**
+
+A tall decorative structure used as a lookout point.
+
+All blocks include:
+
+- Custom block models
+- Blockstates
+- Item models
+- Textures
+
+---
+
+## 🧠 **Advanced AI Behaviors**
+
+AVP adds custom villager brain injections:
+
+### **Warrior AI**
+
+- Sparring routines
+- Combat stance logic
+- Hostile engagement
+- Team combat buffs
+
+### **Guard AI**
+
+- Patrol routes
+- Shift behavior
+- Alarm system
+- Bell‑ringing
+- Village‑wide alert events
+
+---
+
+## ⚔️ **Village Defense System**
+
+When a threat is detected:
+
+- Guards trigger alarms
+- Warriors enter combat mode
+- Villagers panic and run indoors
+- Players near the village receive temporary buffs
+- Warriors and guards gain XP
+- Optional reinforcement logic (expandable)
+
+This creates dynamic, emergent village battles.
+
+---
+
+## 🎨 **Custom Textures & Variants**
+
+AVP includes:
+
+- Profession outfits for Warriors and Guards
+- Biome‑specific villager variants:
+  - Plains
+  - Desert
+  - Savanna
+  - Taiga
+  - Snowy
+
+---
+
+## 🧬 **GeckoLib Animations**
+
+Warriors use GeckoLib‑powered animations:
+
+- Combat stance
+- Combat movement
+- Future expansion support
+
+Animation files are located in:
+
+```
+assets/avp/geckolib/animations/
+```
+
+---
+
+## 📦 **Installation**
+
+1. Install **Fabric Loader 0.18.4+**
+2. Install **Fabric API 0.141.3+**
+3. Install **GeckoLib 5.4.3** (Fabric version)
+4. Place `avp-x.x.x.jar` into your `mods/` folder
+
+---
+
+## 🧪 **Development**
+
+This mod uses:
+
+- **Fabric Loom 1.15-SNAPSHOT**
+- **Yarn mappings 1.21.11+build.4**
+- **Java 21**
+
+Entry points defined in `fabric.mod.json`:
+
+```json
+"entrypoints": {
+  "main": ["dk.mosberg.AVP"],
+  "client": ["dk.mosberg.client.AVPClient"],
+  "fabric-datagen": ["dk.mosberg.client.datagen.AVPDataGenerator"],
+  "modmenu": ["dk.mosberg.client.modmenu.AVPModMenu"]
+}
+```
+
+Mixins:
+
+```json
+"mixins": [
+  "avp.mixins.json",
+  {
+    "config": "avp.client.mixins.json",
+    "environment": "client"
+  }
+]
+```
+
+---
+
+## 📄 **License**
+
+This project is licensed under the **MIT License**.  
+You are free to use, modify, and distribute the mod as long as the license terms are followed.
+
+---
+
+## 🌐 **Links**
+
+- Homepage: https://fabricmc.net/
+- Source Template: https://github.com/FabricMC/fabric-example-mod
+
+---
+
+## ❤️ **Credits**
+
+Created by **Mosberg!**  
+Special thanks to the Fabric and GeckoLib communities.
+
+---
+
+If you want, I can also generate:
+
+- A **logo/banner** for the README
+- A **curseforge/modrinth description**
+- A **changelog template**
+- A **GitHub Actions build workflow**
+
+Just tell me what you’d like next.
